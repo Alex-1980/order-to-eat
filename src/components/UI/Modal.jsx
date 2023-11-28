@@ -2,26 +2,26 @@ import React from "react";
 import ReactDOM from "react-dom";
 import classes from "../UI/Modal.module.css";
 
-const Backdrop = () => {
-  return <div className={classes.ackdrop} />;
+const Backdrop = ({onClose}) => {
+  return <div className={classes.backdrop} onClick={onClose} />;
 };
 
-const ModalOverlay = (props) => {
+const ModalOverlay = ({children}) => {
   return (
     <div className={classes.modal}>
-      <div className={classes.content}>{props.children}</div>
+      <div className={classes.content}>{children}</div>
     </div>
   );
 };
 
 const portalElement = document.getElementById("overlays");
 
-const Modal = (props) => {
+const Modal = ({children, onClose}) => {
   return (
     <>
-      {ReactDOM.createPortal(<Backdrop />, portalElement)}
+      {ReactDOM.createPortal(<Backdrop onClose={onClose} />, portalElement)}
       {ReactDOM.createPortal(
-        <ModalOverlay>{props.children}</ModalOverlay>,
+        <ModalOverlay>{children}</ModalOverlay>,
         portalElement
       )}
     </>
